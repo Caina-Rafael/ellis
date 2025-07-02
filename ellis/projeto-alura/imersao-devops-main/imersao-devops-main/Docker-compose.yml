@@ -1,0 +1,21 @@
+# Use a especificação moderna do Docker Compose
+services:
+  # Define o serviço para a nossa aplicação FastAPI
+  api:
+    # Constrói a imagem Docker a partir do Dockerfile no diretório atual
+    build: .
+    # Nomeia o contêiner para facilitar a identificação
+    container_name: api
+    # Mapeia a porta 8000 da sua máquina (host) para a porta 8000 no contêiner
+    ports:
+      - "8000:8000"
+    # Monta um volume nomeado para persistir o banco de dados SQLite
+    # A aplicação cria o 'escola.db' dentro de /app, e isso garante que os dados não sejam perdidos
+    volumes:
+      - db_data:/app
+    # Reinicia o contêiner automaticamente, a menos que seja parado manualmente
+    restart: unless-stopped
+
+# Define o volume nomeado para a persistência dos dado
+volumes:
+  db_data:
